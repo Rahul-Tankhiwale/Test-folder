@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with hardcoded base URL
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://test-folder-5f3u.onrender.com/api',
 });
 
 // Add request interceptor to attach token
