@@ -1,0 +1,601 @@
+/* ================= CHARTS SECTION ================= */
+.charts-section {
+  margin: 20px 0;
+  width: 100%;
+}
+
+.charts-header {
+  margin-bottom: 20px;
+}
+
+.charts-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.charts-subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ================= CHARTS GRID ================= */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.chart-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.chart-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Specific chart card styles */
+.pie-chart-card {
+  grid-column: 1;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.line-chart-card {
+  grid-column: 2;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.area-chart-card.wide,
+.bar-chart-card.wide {
+  grid-column: span 2;
+  min-height: 450px;
+  padding: 25px;
+}
+
+.chart-header {
+  margin-bottom: 25px;
+}
+
+.chart-header h4 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.chart-description {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ================= PIE/DOUGHNUT CHART SPECIFIC ================= */
+.pie-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+/* Pie chart container */
+.pie-chart-wrapper .recharts-responsive-container {
+  height: 350px !important;
+  width: 100% !important;
+  flex-shrink: 0;
+}
+
+/* Center text in donut hole */
+.pie-chart-wrapper text {
+  pointer-events: none;
+}
+
+/* Pie chart legend */
+.pie-legend {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+
+.pie-legend::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pie-legend::-webkit-scrollbar-track {
+  background: var(--bg);
+  border-radius: 3px;
+}
+
+.pie-legend::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg);
+  transition: all 0.2s ease;
+}
+
+.legend-item:hover {
+  background: var(--muted);
+  transform: translateX(5px);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.legend-value {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ================= CHART CONTAINERS ================= */
+.chart-container {
+  width: 100%;
+  height: calc(100% - 70px); /* Subtract header height */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* No data message */
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 40px 20px;
+  flex: 1;
+}
+
+.no-data-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.no-data-message p {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.no-data-message small {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* Responsive Container fixes */
+.recharts-responsive-container {
+  width: 100% !important;
+  height: 100% !important;
+  flex: 1;
+}
+
+/* Small chart for right panel */
+.small-chart-container {
+  width: 100%;
+  height: 160px;
+  position: relative;
+}
+
+/* ================= CHART SPECIFIC STYLES ================= */
+.custom-tooltip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: var(--shadow);
+  font-size: 13px;
+  color: var(--text);
+  max-width: 250px;
+}
+
+.custom-tooltip strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.tooltip-item {
+  margin-top: 6px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tooltip-item strong {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* Legend styling */
+.recharts-legend-wrapper {
+  padding-top: 10px !important;
+}
+
+.recharts-legend-item {
+  font-size: 12px !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.recharts-legend-item:hover {
+  opacity: 0.7;
+}
+
+.recharts-legend-item-text {
+  margin-left: 6px !important;
+}
+
+/* Line chart specific styles */
+.recharts-line-curve {
+  stroke-width: 3;
+  transition: stroke-width 0.2s ease;
+}
+
+.recharts-line:hover .recharts-line-curve {
+  stroke-width: 4;
+}
+
+.recharts-line-dots circle {
+  transition: r 0.2s ease;
+}
+
+.recharts-line-dots circle:hover {
+  r: 6;
+}
+
+/* Area chart specific styles */
+.recharts-area-curve {
+  stroke-width: 2;
+}
+
+/* Bar chart specific */
+.recharts-bar-rectangles {
+  transition: all 0.3s ease;
+}
+
+.recharts-bar-rectangles:hover {
+  opacity: 0.8;
+}
+
+.recharts-bar-rectangles rect {
+  transition: fill-opacity 0.2s ease;
+}
+
+.recharts-bar-rectangles rect:hover {
+  fill-opacity: 0.9;
+}
+
+/* Axis styling */
+.recharts-x-axis,
+.recharts-y-axis {
+  font-size: 12px !important;
+}
+
+.recharts-x-axis line,
+.recharts-y-axis line,
+.recharts-cartesian-axis-line {
+  stroke: var(--border) !important;
+}
+
+.recharts-cartesian-grid line {
+  stroke: var(--border) !important;
+  stroke-opacity: 0.3;
+}
+
+/* Grid lines */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke-dasharray: 3 3;
+}
+
+/* Pie chart specific */
+.recharts-pie-label {
+  font-size: 11px !important;
+  pointer-events: none;
+}
+
+/* Responsive styles for line chart dots */
+.recharts-line-dots circle {
+  fill: white;
+  stroke-width: 2;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1200px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .pie-chart-card,
+  .line-chart-card,
+  .area-chart-card.wide,
+  .bar-chart-card.wide {
+    grid-column: span 1;
+    min-height: 500px;
+  }
+  
+  .chart-card {
+    padding: 20px;
+  }
+  
+  .pie-chart-wrapper .recharts-responsive-container {
+    height: 300px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .charts-grid {
+    gap: 12px;
+  }
+  
+  .chart-header h4 {
+    font-size: 18px;
+  }
+  
+  .chart-description {
+    font-size: 13px;
+  }
+  
+  .no-data-icon {
+    font-size: 36px;
+  }
+  
+  .pie-chart-card,
+  .line-chart-card {
+    min-height: 450px;
+  }
+  
+  .area-chart-card.wide,
+  .bar-chart-card.wide {
+    min-height: 420px;
+  }
+  
+  .pie-chart-wrapper .recharts-responsive-container {
+    height: 280px !important;
+  }
+  
+  .pie-legend {
+    max-height: 120px;
+  }
+  
+  .legend-item {
+    padding: 5px 8px;
+  }
+  
+  .legend-name {
+    font-size: 12px;
+  }
+  
+  .legend-value {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .charts-header h3 {
+    font-size: 20px;
+  }
+  
+  .chart-card {
+    padding: 15px;
+  }
+  
+  .chart-container {
+    height: calc(100% - 60px);
+  }
+  
+  .custom-tooltip {
+    font-size: 12px;
+    padding: 8px;
+  }
+  
+  .tooltip-item {
+    font-size: 12px;
+  }
+  
+  .pie-chart-wrapper .recharts-responsive-container {
+    height: 250px !important;
+  }
+  
+  .pie-chart-card,
+  .line-chart-card {
+    min-height: 400px;
+  }
+  
+  .area-chart-card.wide,
+  .bar-chart-card.wide {
+    min-height: 380px;
+  }
+}
+
+/* ================= DARK MODE SUPPORT ================= */
+[data-theme="dark"] .recharts-cartesian-grid line {
+  stroke: var(--border) !important;
+  stroke-opacity: 0.2;
+}
+
+[data-theme="dark"] .custom-tooltip {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+[data-theme="dark"] .recharts-legend-item {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .recharts-x-axis text,
+[data-theme="dark"] .recharts-y-axis text {
+  fill: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .recharts-tooltip-item {
+  color: var(--text) !important;
+}
+
+[data-theme="dark"] .recharts-line-dots circle {
+  fill: var(--card);
+  stroke: var(--accent);
+}
+
+[data-theme="dark"] .legend-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .legend-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .pie-legend::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Animation for chart loading */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chart-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.pie-chart-card {
+  animation-delay: 0.1s;
+}
+
+.line-chart-card {
+  animation-delay: 0.2s;
+}
+
+.area-chart-card {
+  animation-delay: 0.3s;
+}
+
+.bar-chart-card {
+  animation-delay: 0.4s;
+}
+
+/* Loading state */
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.chart-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 12px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hover effects for better UX */
+.recharts-line:hover {
+  cursor: pointer;
+}
+
+.recharts-area:hover {
+  cursor: pointer;
+}
+
+.recharts-bar:hover {
+  cursor: pointer;
+}
+
+/* Chart gradient backgrounds */
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), #4E79A7, #59A14F, #E15759);
+  border-radius: var(--radius) var(--radius) 0 0;
+  opacity: 0.7;
+}
+
+.line-chart-card::before {
+  background: linear-gradient(90deg, #4E79A7, var(--accent));
+}
+
+.area-chart-card::before {
+  background: linear-gradient(90deg, #59A14F, #E15759);
+}
+
+.bar-chart-card::before {
+  background: linear-gradient(90deg, var(--accent), #4E79A7);
+}
