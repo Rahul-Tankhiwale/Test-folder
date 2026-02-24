@@ -8,8 +8,8 @@
 
 ## 🌐 Live Demo
 
-* **Frontend (Vercel):** https://your-frontend-link.vercel.app
-* **Backend (Render):** https://your-backend-link.onrender.com
+* **Frontend (Vercel):** https://test-folder-two.vercel.app/login
+* **Backend (Render):** https://test-folder-5f3u.onrender.com
 
 ---
 
@@ -88,7 +88,7 @@ Use the following credentials to test the application:
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/expense-tracker.git
+git clone https://github.com/Rahul-Tankhiwale/Test-folder.git
 cd expense-tracker
 ```
 
@@ -156,7 +156,7 @@ Through this project, I learned:
 
 **Rahul Tankhiwale**
 
-* GitHub: https://github.com/your-username
+* GitHub: https://github.com/Rahul-Tankhiwale
 * LinkedIn: https://www.linkedin.com/in/rahul-tankhiwale-5a91b9213/
 
 ---
@@ -169,8 +169,7 @@ If you like this project:
 * Fork it 🍴
 * Share it 🚀
 
----
 
-<p align="center">
-  Built with ❤️ using the MERN Stack
-</p>
+
+
+
