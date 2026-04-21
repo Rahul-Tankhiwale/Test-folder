@@ -1,6 +1,10 @@
+// server/routes/transactionRoutes.js
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../middleware/authMiddleware");
+
+// ✅ FIXED: Import the named export correctly
+const { authMiddleware } = require("../middleware/authMiddleware");
+
 const {
   getTransactions,
   addTransaction,
@@ -8,8 +12,7 @@ const {
   deleteTransaction,
 } = require("../controllers/transactionController");
 
-// All routes are PROTECTED
-router.use(authMiddleware);
+router.use(authMiddleware); 
 
 router.get("/", getTransactions);
 router.post("/", addTransaction);
