@@ -1,3 +1,4 @@
+// client/src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -14,9 +15,12 @@ export const AuthProvider = ({ children }) => {
         const storedUser = localStorage.getItem("user");
         const storedToken = localStorage.getItem("token");
         
-        if (storedToken && storedUser) {
+        if (storedToken && storedUser && storedUser !== "undefined") {
           setUser(JSON.parse(storedUser));
           setToken(storedToken);
+         
+        } else {
+          console.log("⚠️ No stored auth data found");
         }
       } catch (err) {
         console.error("Error parsing stored data:", err);
@@ -32,6 +36,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData, authToken) => {
+    console.log("🔐 Login called with user:", userData?.email);
     setUser(userData);
     setToken(authToken);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -39,6 +44,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    console.log("🚪 Logout called");
     setUser(null);
     setToken(null);
     localStorage.removeItem("user");
@@ -46,9 +52,20 @@ export const AuthProvider = ({ children }) => {
     window.location.href = '/login';
   };
 
-  // Check if user is authenticated
+  // Check if user is authenticated (only if not loading)
   const isAuthenticated = () => {
-    return !!token;
+    if (loading) return false;
+    return !!token && !!user;
+  };
+
+  // Get current user safely
+  const getCurrentUser = () => {
+    return user;
+  };
+
+  // Get current token
+  const getToken = () => {
+    return token;
   };
 
   return (
@@ -58,7 +75,9 @@ export const AuthProvider = ({ children }) => {
       login, 
       logout, 
       loading,
-      isAuthenticated 
+      isAuthenticated,
+      getCurrentUser,
+      getToken
     }}>
       {children}
     </AuthContext.Provider>
@@ -66,4 +85,10 @@ export const AuthProvider = ({ children }) => {
 };
 
 // Hook for consuming auth context
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
