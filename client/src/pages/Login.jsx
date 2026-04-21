@@ -3,16 +3,18 @@ import API from "../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/auth.css";
-import { useTheme } from "../context/ThemeContext"; // ADD THIS
-import ThemeToggle from "../components/ThemeToggle"; // ADD THIS
+import { useTheme } from "../context/ThemeContext";
+import ThemeToggle from "../components/ThemeToggle";
+import GoogleAuthService from "../services/googleAuthService"; // ADD THIS
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const { theme } = useTheme(); // ADD THIS
+  const { theme } = useTheme();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false); // ADD THIS
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const submitButtonRef = useRef(null);
@@ -27,6 +29,20 @@ const Login = () => {
       setRememberMe(true);
     }
   }, []);
+
+  // ADD THIS: Handle Google redirect response
+ useEffect(() => {
+  // Only check for Google redirect on login page, not on dashboard
+  const authData = GoogleAuthService.extractAuthFromUrl();
+  
+  if (authData && authData.token && authData.user && window.location.pathname === '/login') {
+    console.log('Google redirect detected on login page');
+    GoogleAuthService.handleGoogleSuccess(authData.token, authData.user);
+    login(authData.user, authData.token);
+    GoogleAuthService.cleanUrl();
+    navigate('/');
+  }
+}, [navigate, login]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,6 +84,14 @@ const Login = () => {
     }
   };
 
+  // ADD THIS: Handle Google login click
+const handleGoogleLogin = () => {
+  setGoogleLoading(true);
+  setError("");
+  // Direct hardcoded URL - bypasses process.env issue
+  window.location.href = "http://localhost:5000/api/auth/google";
+};
+
   const createRipple = (event) => {
     const button = submitButtonRef.current;
     if (!button) return;
@@ -94,7 +118,7 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-full-page" data-theme={theme}> {/* ADD data-theme */}
+    <div className="auth-full-page" data-theme={theme}>
       {/* Animated Background */}
       <div className="auth-background"></div>
       
@@ -103,7 +127,7 @@ const Login = () => {
         {/* Left Side - Brand/Info */}
         <div className="auth-left-panel">
           <div className="auth-brand-hero">
-            <div className="hero-logo">{theme === 'dark' ? '💸' : '💰'}</div> {/* THEME AWARE ICON */}
+            <div className="hero-logo">{theme === 'dark' ? '💸' : '💰'}</div>
             <h1 className="hero-title">Expense Tracker</h1>
             <p className="hero-subtitle">Take control of your finances with intelligent tracking</p>
             
@@ -147,7 +171,7 @@ const Login = () => {
         <div className="auth-right-panel">
           {/* Theme Toggle and Language Selector */}
           <div className="auth-controls">
-            <ThemeToggle /> {/* ADD THEME TOGGLE HERE */}
+            <ThemeToggle />
             <div className="language-selector">
              
             </div>
@@ -179,10 +203,9 @@ const Login = () => {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     required
-                    disabled={loading}
+                    disabled={loading || googleLoading}
                     className="auth-input"
                   />
-                  {/* <span className="input-icon"></span> */}
                 </div>
               </div>
 
@@ -201,10 +224,9 @@ const Login = () => {
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
                     required
-                    disabled={loading}
+                    disabled={loading || googleLoading}
                     className="auth-input"
                   />
-                  {/* <span className="input-icon">🔒</span> */}
                   <button
                     type="button"
                     className="password-toggle"
@@ -224,7 +246,7 @@ const Login = () => {
                     id="remember"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    disabled={loading}
+                    disabled={loading || googleLoading}
                   />
                   <label htmlFor="remember">Remember me</label>
                 </div>
@@ -234,7 +256,7 @@ const Login = () => {
                 ref={submitButtonRef}
                 type="submit"
                 className="auth-submit-btn"
-                disabled={loading}
+                disabled={loading || googleLoading}
                 aria-busy={loading}
               >
                 {loading ? (
@@ -256,13 +278,32 @@ const Login = () => {
               <span>Or continue with</span>
             </div>
 
-            {/* Social Login */}
+            {/* Social Login - UPDATED Google Button */}
             <div className="social-login">
-              <button  onClick={()=>{alert('Google Authentication feature is coming soon...')}} type="button" className="social-btn google">
-                <span className="social-icon">G</span>
-                <span>Google</span>
+              <button 
+                onClick={handleGoogleLogin} 
+                type="button" 
+                className="social-btn google"
+                disabled={googleLoading || loading}
+              >
+                {googleLoading ? (
+                  <>
+                    <div className="btn-loader" style={{ width: '16px', height: '16px' }}></div>
+                    <span>Redirecting...</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="social-icon">G</span>
+                    <span>Google</span>
+                  </>
+                )}
               </button>
-              <button  onClick={()=>{alert("GitHub Authentication feature is coming soon...")}} type="button" className="social-btn github">
+              <button  
+                onClick={() => alert("GitHub Authentication feature is coming soon...")} 
+                type="button" 
+                className="social-btn github"
+                disabled={loading || googleLoading}
+              >
                 <span className="social-icon">🐙</span>
                 <span>GitHub</span>
               </button>
@@ -280,11 +321,11 @@ const Login = () => {
           </div>
 
           {/* Loading Overlay */}
-          {loading && (
+          {(loading || googleLoading) && (
             <div className="loading-overlay">
               <div className="loading-content">
                 <div className="loading-spinner-large"></div>
-                <p>Authenticating...</p>
+                <p>{googleLoading ? "Redirecting to Google..." : "Authenticating..."}</p>
               </div>
             </div>
           )}
