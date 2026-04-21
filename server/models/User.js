@@ -15,8 +15,10 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      required: true,
       enum: ["male", "female", "other"],
+      required: function() {
+        return !this.googleId; // Not required for Google users
+      }
     },
     email: {
       type: String,
@@ -27,13 +29,33 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: true,
+      required: function() {
+        return !this.googleId; // Not required for Google users
+      },
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required: function() {
+        // Password is required only for non-Google auth users
+        return !this.googleId;
+      }
     },
+    // ========== GOOGLE AUTH FIELDS ==========
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,  // Allows multiple null values
+      index: true
+    },
+    avatar: {
+      type: String,
+      default: ""
+    },
+    isGoogleAuth: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );
