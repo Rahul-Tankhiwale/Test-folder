@@ -1,7 +1,6 @@
 // server/server.js
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const helmet = require("helmet"); // Install: npm install helmet
 
 dotenv.config();
 
@@ -10,9 +9,6 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.log("MongoDB Error:", err));
 
 const app = require("./app");
-
-// Add security headers to the main server
-app.use(helmet()); // Helmet adds various security headers
 
 // Additional custom security headers
 app.use((req, res, next) => {
