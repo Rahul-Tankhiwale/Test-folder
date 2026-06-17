@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const { OAuth2Client } = require('google-auth-library'); // ADD THIS
+const jwt = require("jsonwebtoken");           // ADD THIS
+const User = require("../models/User");
 const { register, login } = require("../controllers/authController");
 const generateToken = require("../utils/generateToken"); 
 
