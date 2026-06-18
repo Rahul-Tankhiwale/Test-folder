@@ -13,7 +13,7 @@ const FinancialNews = () => {
         setLoading(true);
         // Use your preferred API
         const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?category=business&country=us&pageSize=4&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
+          `https://newsapi.org/v2/top-headlines?category=business&country=us&pageSize=4&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`
         );
         const data = await response.json();
         setNews(data.articles || []);
