@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Use environment variable with fallback for production
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 
+  baseURL: import.meta.env.VITE_API_URL ||
            (process.env.NODE_ENV === 'production' 
              ? 'https://your-backend.onrender.com/api' 
              : 'http://localhost:5000/api'),
